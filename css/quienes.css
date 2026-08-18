@@ -1,0 +1,82 @@
+body { background: var(--crema); }
+
+#quienes {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  padding-top: 140px;
+}
+
+.quienes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.quienes-texto p {
+  color: var(--texto-suave);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.quienes-texto strong { color: var(--cafe); }
+
+.quienes-logo-box {
+  background: var(--blanco);
+  border-radius: var(--radio-l);
+  padding: 2rem;
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra-m);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.quienes-logo-box img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.quienes-mini-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.mini-card {
+  border-radius: var(--radio);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  border: 1.5px solid;
+  transition: transform 0.2s;
+}
+
+.mini-card:hover { transform: scale(1.03); }
+
+.mini-card span { font-size: 1.4rem; }
+
+.mini-card p {
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.mini-card.verde   { background: var(--verde-suave);    border-color: rgba(43,122,59,0.3);   color: var(--verde); }
+.mini-card.amarillo{ background: var(--amarillo-suave); border-color: rgba(245,197,24,0.4);  color: #7a6000; }
+.mini-card.azul    { background: var(--azul-suave);     border-color: rgba(27,94,166,0.3);   color: var(--azul); }
+.mini-card.neutro  { background: #F5F5F5;               border-color: rgba(0,0,0,0.1);       color: #444; }
+
+@media (max-width: 768px) {
+  .quienes-grid { grid-template-columns: 1fr; gap: 2rem; }
+}

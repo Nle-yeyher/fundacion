@@ -1,0 +1,116 @@
+body { background: var(--crema); }
+
+#banking { padding-top: 140px; }
+
+.banking-intro {
+  max-width: 620px;
+  margin-bottom: 3rem;
+}
+
+.banking-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.4rem;
+  margin-bottom: 2.5rem;
+}
+
+.banking-card {
+  background: var(--blanco);
+  border-radius: var(--radio-l);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra-s);
+  overflow: hidden;
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+
+.banking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-l);
+}
+
+.banking-card-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1.6rem 1.2rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+.banking-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.banking-icon.amarillo { background: var(--amarillo-suave); }
+.banking-icon.verde    { background: var(--verde-suave); }
+.banking-icon.azul     { background: var(--azul-suave); }
+
+.banking-card-top h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--cafe);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.banking-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.banking-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.6rem;
+  font-size: 0.86rem;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.banking-info-row:last-child { border-bottom: none; }
+
+.banking-info-row span:first-child {
+  color: var(--texto-suave);
+  font-weight: 500;
+}
+
+.banking-info-row span:last-child {
+  color: var(--cafe);
+  font-weight: 600;
+  text-align: right;
+}
+
+.banking-nota {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--amarillo-suave);
+  border: 1.5px solid rgba(245,197,24,0.5);
+  border-radius: var(--radio-l);
+  padding: 1.6rem 2rem;
+  margin-top: 1rem;
+}
+
+.banking-nota-icono { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
+
+.banking-nota p {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--texto);
+}
+
+.banking-nota strong { color: var(--cafe); }
+
+@media (max-width: 600px) {
+  .banking-grid { grid-template-columns: 1fr; }
+  .banking-nota { flex-direction: column; gap: 0.6rem; }
+}
