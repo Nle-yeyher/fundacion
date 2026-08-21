@@ -1,0 +1,14 @@
+{
+  "name": "fundacion-jeedd-choco-cms",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@vercel/blob": "latest",
+    "jsonwebtoken": "latest",
+    "mysql2": "latest",
+    "busboy": "latest"
+  }
+}

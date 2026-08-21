@@ -351,3 +351,43 @@ body {
   .hero-logo-fondo { display: none; }
   .hero-titulo { letter-spacing: -0.8px; }
 }
+
+/* =============================================
+   SLIDE C — CAMPAÑA SOLIDARIA
+   ============================================= */
+.campana-cuenta {
+  margin: 1.2rem 0 1.8rem;
+}
+
+.campana-banco {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: var(--blanco);
+  border: 2px solid var(--amarillo);
+  border-radius: var(--radio-l);
+  padding: 1.2rem 2rem;
+  box-shadow: var(--sombra-m);
+}
+
+.campana-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--texto-suave);
+}
+
+.campana-numero {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--cafe);
+  letter-spacing: 2px;
+}
+
+.campana-titular {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--verde);
+}
