@@ -16,24 +16,30 @@ module.exports = async function handler(req, res) {
       for (const row of rows) contenido[row.clave] = row.valor;
       return res.status(200).json(contenido);
     }
-
-    if (!isAuthenticated(req)) return res.status(401).json({ error: 'No autorizado.' });
-
+    
     if (req.method === 'PUT') {
       const items = Array.isArray(req.body?.items) ? req.body.items : [];
       if (!items.length) return res.status(400).json({ error: 'No hay cambios para guardar.' });
 
       for (const item of items) {
         if (!item.clave || typeof item.valor !== 'string') continue;
+        
         await db.query(
           `INSERT INTO contenido (clave, valor, tipo, etiqueta, grupo, activo)
-           VALUES (?, ?, COALESCE(?, 'texto'), COALESCE(?, ?), COALESCE(?, 'General'), 1)
+           VALUES (?, ?, ?, ?, ?, 1)
            ON DUPLICATE KEY UPDATE valor = VALUES(valor), tipo = VALUES(tipo), etiqueta = VALUES(etiqueta), grupo = VALUES(grupo), activo = 1`,
-          [item.clave, item.valor, item.tipo || 'texto', item.etiqueta || item.clave, item.grupo || 'General']
+          [
+            item.clave, 
+            item.valor, 
+            item.tipo || 'texto', 
+            item.etiqueta || item.clave, 
+            item.grupo || 'General'
+          ]
         );
       }
       return res.status(200).json({ ok: true });
     }
+
 
     if (req.method === 'DELETE') {
       const clave = req.body?.clave;
