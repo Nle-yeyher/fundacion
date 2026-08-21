@@ -7,7 +7,9 @@
   const saveStatus = document.getElementById('save-status');
   const state = new Map();
 
-  const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+      // ✅ REEMPLÁZALO POR ESTA LÍNEA CORREGIDA (usando comillas dobles en el objeto):
+    const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
 
   async function comprobarSesion() {
     try {
