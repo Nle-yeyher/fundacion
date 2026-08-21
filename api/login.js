@@ -5,8 +5,10 @@ module.exports = async function handler(req, res) {
 
   try {
     const { usuario, password } = req.body || {};
-    const expectedUser = process.env.ADMIN_USER;
-    const expectedPassword = process.env.ADMIN_PASSWORD;
+   // const expectedUser = process.env.ADMIN_USER;
+  // const expectedPassword = process.env.ADMIN_PASSWORD;
+    const expectedUser = "jeeddadmin";
+    const expectedPassword = "Choco2026!";
 
     if (!expectedUser || !expectedPassword) {
       return res.status(500).json({ error: 'Configura ADMIN_USER y ADMIN_PASSWORD en las variables de Vercel.' });
