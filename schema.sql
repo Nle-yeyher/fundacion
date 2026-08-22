@@ -12,3 +12,28 @@ CREATE TABLE IF NOT EXISTS contenido (
   UNIQUE KEY uq_contenido_clave (clave),
   KEY idx_contenido_grupo (grupo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS publicaciones (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  titulo VARCHAR(500) NOT NULL,
+  extracto TEXT,
+  contenido LONGTEXT,
+  estado VARCHAR(20) NOT NULL DEFAULT 'borrador',
+  categoria VARCHAR(50) NOT NULL DEFAULT 'general',
+  fecha DATE,
+  imagen VARCHAR(1000),
+  creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  actualizado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_pub_estado (estado),
+  KEY idx_pub_categoria (categoria),
+  KEY idx_pub_fecha (fecha)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS galeria (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  url VARCHAR(1000) NOT NULL,
+  nombre VARCHAR(500),
+  creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

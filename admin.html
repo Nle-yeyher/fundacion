@@ -1,44 +1,322 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administración · Fundación Jeedd Chocó</title>
-  <link rel="icon" href="img/favicon.png">
-  <link rel="stylesheet" href="css/admin.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin | Fundación Jeedd Chocó</title>
+<link rel="icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-  <main class="admin-shell">
-    <section id="login-view" class="login-card">
-      <div class="login-logo"><img src="img/logo.jpg" alt="Fundación Jeedd Chocó"></div>
-      <span class="eyebrow">Área privada</span>
-      <h1>Panel de administración</h1>
-      <p>Administra el contenido de la Fundación Jeedd Chocó.</p>
-      <form id="login-form">
-        <label>Usuario<input id="usuario" type="text" autocomplete="username" required></label>
-        <label>Contraseña<input id="password" type="password" autocomplete="current-password" required></label>
-        <button class="btn primary" type="submit">Entrar</button>
-        <div id="login-error" class="alert error hidden"></div>
-      </form>
-    </section>
 
-    <section id="admin-view" class="hidden">
-      <header class="topbar">
-        <div>
-          <span class="eyebrow">Fundación Jeedd Chocó</span>
-          <h1>Panel de administración</h1>
-        </div>
-        <div class="top-actions">
-          <a class="btn secondary" href="index.html" target="_blank">Ver página</a>
-          <button id="logout" class="btn danger-outline">Cerrar sesión</button>
-        </div>
-      </header>
+<!-- ==================== LOGIN ==================== -->
+<div id="login-screen">
+  <div class="login-box">
+    <img src="img/logo.jpg" alt="Logo" class="login-logo">
+    <h1>Panel de administración</h1>
+    <p class="login-sub">Fundación Jeedd Chocó</p>
+    <form class="login-form" id="login-form">
+      <div>
+        <label for="usuario">Usuario</label>
+        <input id="usuario" type="text" autocomplete="username" required placeholder="Tu usuario">
+      </div>
+      <div>
+        <label for="password">Contraseña</label>
+        <input id="password" type="password" autocomplete="current-password" required placeholder="••••••••">
+      </div>
+      <div id="login-error" class="login-error hidden"></div>
+      <button class="btn-login" type="submit">Ingresar</button>
+    </form>
+  </div>
+</div>
 
-      <div class="notice">Los cambios se guardan en TiDB Cloud. Las imágenes nuevas se almacenan en Vercel Blob.</div>
-      <div id="save-status" class="alert hidden"></div>
-      <div id="groups" class="groups"></div>
-    </section>
+<!-- ==================== ADMIN ==================== -->
+<div id="admin-screen">
+
+  <!-- TOPBAR -->
+  <header class="admin-topbar">
+    <div class="topbar-left">
+      <img src="img/logo.jpg" alt="" class="topbar-logo">
+      <span class="topbar-title">Admin <span>Jeedd Chocó</span></span>
+      <span class="topbar-badge">CMS</span>
+    </div>
+    <div class="topbar-right">
+      <a href="index.html" target="_blank" class="btn-ver-pagina">Ver página</a>
+      <button id="btn-logout" class="btn-cerrar-sesion">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-section-label">Principal</div>
+    <button class="sidebar-item active" data-panel="dashboard">
+      <span class="sidebar-icon">&#9678;</span> Dashboard
+    </button>
+
+    <div class="sidebar-section-label">Publicaciones</div>
+    <button class="sidebar-item" data-panel="publicaciones">
+      <span class="sidebar-icon">&#128240;</span> Noticias y actividades
+      <span class="sidebar-badge" id="badge-pub">0</span>
+    </button>
+    <button class="sidebar-item" data-panel="nueva-publicacion">
+      <span class="sidebar-icon">&#43;</span> Nueva publicación
+    </button>
+    <button class="sidebar-item" data-panel="galeria">
+      <span class="sidebar-icon">&#128247;</span> Galería de medios
+    </button>
+
+    <div class="sidebar-section-label">Contenido del sitio</div>
+    <button class="sidebar-item" data-panel="inicio">
+      <span class="sidebar-icon">&#127968;</span> Inicio
+    </button>
+    <button class="sidebar-item" data-panel="mision">
+      <span class="sidebar-icon">&#127919;</span> Misión
+    </button>
+    <button class="sidebar-item" data-panel="vision">
+      <span class="sidebar-icon">&#128065;</span> Visión
+    </button>
+    <button class="sidebar-item" data-panel="quienes">
+      <span class="sidebar-icon">&#128101;</span> Quiénes somos
+    </button>
+    <button class="sidebar-item" data-panel="donaciones">
+      <span class="sidebar-icon">&#128179;</span> Donaciones
+    </button>
+    <button class="sidebar-item" data-panel="contacto">
+      <span class="sidebar-icon">&#9993;</span> Contacto
+    </button>
+
+    <div class="sidebar-section-label">Configuración</div>
+    <button class="sidebar-item" data-panel="redes">
+      <span class="sidebar-icon">&#127758;</span> Redes sociales
+    </button>
+    <button class="sidebar-item" data-panel="imagenes">
+      <span class="sidebar-icon">&#128444;</span> Imágenes del sitio
+    </button>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="admin-main">
+
+    <!-- ALERTA GLOBAL -->
+    <div id="alerta-global" class="hidden"></div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="panel-header">
+        <h2>Dashboard</h2>
+        <p>Resumen del estado del sitio web</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon verde">&#128240;</div>
+          <div><div class="stat-num" id="stat-pub">—</div><div class="stat-lbl">Publicaciones</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon amarillo">&#128444;</div>
+          <div><div class="stat-num" id="stat-img">—</div><div class="stat-lbl">Imágenes en galería</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon azul">&#128101;</div>
+          <div><div class="stat-num" id="stat-campos">—</div><div class="stat-lbl">Campos de contenido</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon naranja">&#128200;</div>
+          <div><div class="stat-num">Activo</div><div class="stat-lbl">Estado del sitio</div></div>
+        </div>
+      </div>
+      <div class="dashboard-quick">
+        <div class="quick-card">
+          <h3>Acciones rápidas</h3>
+          <div style="display:flex;flex-direction:column;gap:.6rem">
+            <button class="btn btn-verde btn-grande" onclick="irPanel('nueva-publicacion')">+ Nueva publicación</button>
+            <button class="btn btn-amarillo btn-grande" onclick="irPanel('galeria')">Subir imagen a galería</button>
+            <button class="btn btn-azul btn-grande" onclick="irPanel('donaciones')">Actualizar cuentas bancarias</button>
+            <a href="index.html" target="_blank" class="btn btn-gris btn-grande">Ver el sitio web</a>
+          </div>
+        </div>
+        <div class="quick-card">
+          <h3>Últimas publicaciones</h3>
+          <div id="dash-ultimas-pub"><div class="loading-spinner">Cargando</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PUBLICACIONES ===== -->
+    <div class="panel" id="panel-publicaciones">
+      <div class="panel-header">
+        <h2>Noticias y actividades</h2>
+        <p>Gestiona las publicaciones del sitio. Cada publicación puede tener imagen, categoría y contenido.</p>
+      </div>
+      <div class="pub-toolbar">
+        <div class="pub-toolbar-left">
+          <input class="pub-search" id="pub-buscar" type="text" placeholder="Buscar publicación...">
+          <select class="pub-filtro" id="pub-filtro-cat">
+            <option value="">Todas las categorías</option>
+            <option value="educacion">Educación</option>
+            <option value="cultura">Cultura</option>
+            <option value="deporte">Deporte</option>
+            <option value="ambiente">Medio ambiente</option>
+            <option value="emprendimiento">Emprendimiento</option>
+            <option value="comunidad">Comunidad</option>
+            <option value="general">General</option>
+          </select>
+        </div>
+        <button class="btn btn-verde" onclick="irPanel('nueva-publicacion')">+ Nueva publicación</button>
+      </div>
+      <div id="pub-lista"><div class="loading-spinner">Cargando publicaciones</div></div>
+    </div>
+
+    <!-- ===== NUEVA / EDITAR PUBLICACIÓN ===== -->
+    <div class="panel" id="panel-nueva-publicacion">
+      <div class="panel-header">
+        <h2 id="editor-panel-titulo">Nueva publicación</h2>
+        <p>Completa todos los campos y guarda cuando estés listo.</p>
+      </div>
+      <input type="hidden" id="pub-edit-id">
+      <div class="editor-grid">
+        <div class="editor-main">
+          <div class="edit-card">
+            <div class="campo">
+              <label>Título de la publicación *</label>
+              <input id="pub-titulo" type="text" placeholder="Ej: Jornada educativa en Condoto">
+            </div>
+            <div class="campo">
+              <label>Extracto (resumen corto)</label>
+              <textarea id="pub-extracto" placeholder="Breve descripción que aparece en la lista..."></textarea>
+            </div>
+          </div>
+          <div class="edit-card">
+            <div class="edit-card-header"><h3>Contenido</h3></div>
+            <div class="editor-toolbar">
+              <button onclick="fmt('bold')"><b>N</b></button>
+              <button onclick="fmt('italic')"><i>I</i></button>
+              <button onclick="fmt('underline')"><u>S</u></button>
+              <button onclick="insertarParrafo()">Párrafo</button>
+              <button onclick="fmt('insertUnorderedList')">Lista</button>
+              <button onclick="fmt('insertOrderedList')">1. Lista</button>
+              <button onclick="insertarEnlace()">Enlace</button>
+            </div>
+            <div id="editor-contenido" contenteditable="true" spellcheck="true" placeholder="Escribe el contenido de la publicación aquí..."></div>
+          </div>
+        </div>
+        <div class="editor-side">
+          <div class="edit-card">
+            <div class="edit-card-header"><h3>Publicar</h3></div>
+            <div class="campo">
+              <label>Estado</label>
+              <select id="pub-estado">
+                <option value="borrador">Borrador</option>
+                <option value="publicado">Publicado</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label>Fecha</label>
+              <input id="pub-fecha" type="date">
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-verde btn-grande" onclick="guardarPublicacion()">Guardar</button>
+              <button class="btn btn-gris" onclick="irPanel('publicaciones')">Cancelar</button>
+            </div>
+          </div>
+          <div class="edit-card">
+            <div class="edit-card-header"><h3>Categoría</h3></div>
+            <div class="campo">
+              <select id="pub-categoria">
+                <option value="general">General</option>
+                <option value="educacion">Educación</option>
+                <option value="cultura">Cultura</option>
+                <option value="deporte">Deporte</option>
+                <option value="ambiente">Medio ambiente</option>
+                <option value="emprendimiento">Emprendimiento</option>
+                <option value="comunidad">Comunidad</option>
+              </select>
+            </div>
+          </div>
+          <div class="edit-card">
+            <div class="edit-card-header"><h3>Imagen destacada</h3></div>
+            <label class="upload-zona" id="zona-img-pub">
+              <input type="file" accept="image/*" id="pub-img-input" onchange="previsualizarPubImg(this)">
+              <p class="upload-zona-text">Arrastra o haz clic para subir<br><strong>PNG, JPG hasta 4 MB</strong></p>
+              <img id="pub-img-preview" class="upload-preview-img" src="" alt="">
+            </label>
+            <input type="hidden" id="pub-img-url">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GALERÍA ===== -->
+    <div class="panel" id="panel-galeria">
+      <div class="panel-header">
+        <h2>Galería de medios</h2>
+        <p>Sube y administra todas las imágenes del sitio.</p>
+      </div>
+      <div class="edit-card" style="margin-bottom:1.2rem">
+        <div class="edit-card-header"><h3>Subir nueva imagen</h3></div>
+        <label class="upload-zona" id="zona-galeria">
+          <input type="file" accept="image/*" multiple id="galeria-input" onchange="subirGaleria(this)">
+          <p class="upload-zona-text">Arrastra imágenes aquí o haz clic para seleccionar<br><strong>Puedes subir varias a la vez · PNG, JPG · hasta 4 MB cada una</strong></p>
+        </label>
+        <div id="galeria-progreso" class="hidden" style="margin-top:.8rem"></div>
+      </div>
+      <div id="galeria-grid" class="media-grid"><div class="loading-spinner">Cargando galería</div></div>
+    </div>
+
+    <!-- ===== INICIO ===== -->
+    <div class="panel" id="panel-inicio">
+      <div class="panel-header"><h2>Inicio</h2><p>Edita el contenido de la página de inicio.</p></div>
+      <div id="cms-inicio"><div class="loading-spinner">Cargando</div></div>
+    </div>
+
+    <!-- ===== MISIÓN ===== -->
+    <div class="panel" id="panel-mision">
+      <div class="panel-header"><h2>Misión</h2><p>Edita el texto de la página de misión.</p></div>
+      <div id="cms-mision"><div class="loading-spinner">Cargando</div></div>
+    </div>
+
+    <!-- ===== VISIÓN ===== -->
+    <div class="panel" id="panel-vision">
+      <div class="panel-header"><h2>Visión</h2><p>Edita el texto de la página de visión.</p></div>
+      <div id="cms-vision"><div class="loading-spinner">Cargando</div></div>
+    </div>
+
+    <!-- ===== QUIÉNES SOMOS ===== -->
+    <div class="panel" id="panel-quienes">
+      <div class="panel-header"><h2>Quiénes somos</h2><p>Edita los textos de la página de quiénes somos.</p></div>
+      <div id="cms-quienes"><div class="loading-spinner">Cargando</div></div>
+    </div>
+
+    <!-- ===== DONACIONES ===== -->
+    <div class="panel" id="panel-donaciones">
+      <div class="panel-header"><h2>Donaciones</h2><p>Actualiza las cuentas bancarias y textos de la sección de donaciones.</p></div>
+      <div id="cms-donaciones"><div class="loading-spinner">Cargando</div></div>
+    </div>
+
+    <!-- ===== CONTACTO ===== -->
+    <div class="panel" id="panel-contacto">
+      <div class="panel-header"><h2>Contacto</h2><p>Actualiza la información de contacto.</p></div>
+      <div id="cms-contacto"><div class="loading-spinner">Cargando</div></div>
+    </div>
+
+    <!-- ===== REDES SOCIALES ===== -->
+    <div class="panel" id="panel-redes">
+      <div class="panel-header"><h2>Redes sociales</h2><p>Actualiza los enlaces de redes sociales.</p></div>
+      <div id="cms-redes"><div class="loading-spinner">Cargando</div></div>
+    </div>
+
+    <!-- ===== IMÁGENES ===== -->
+    <div class="panel" id="panel-imagenes">
+      <div class="panel-header"><h2>Imágenes del sitio</h2><p>Actualiza el logo y otras imágenes principales.</p></div>
+      <div id="cms-imagenes"><div class="loading-spinner">Cargando</div></div>
+    </div>
+
   </main>
-  <script src="js/admin.js"></script>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script src="js/admin.js"></script>
 </body>
 </html>

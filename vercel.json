@@ -2,6 +2,8 @@
   "version": 2,
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/api/publicaciones/:id", "destination": "/api/publicaciones/[id]" },
+    { "source": "/api/galeria/:id", "destination": "/api/galeria/[id]" },
     { "source": "/api/(.*)", "destination": "/api/$1" }
   ]
 }
